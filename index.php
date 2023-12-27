@@ -10,7 +10,8 @@ $result = $conn->query($sql);
 
 <head>
     <meta charset="UTF-8">
-    <title>CRUD em PHP</title>
+    <title>Lista</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
 <body>
@@ -19,9 +20,9 @@ $result = $conn->query($sql);
 
     <table border="1">
         <tr>
-            <th>ID</th>
             <th>Nome</th>
             <th>Email</th>
+            <th>Telefone</th>
             <th>Cidade</th>
             <th>Estado</th>
             <th>Pais</th>
@@ -31,23 +32,38 @@ $result = $conn->query($sql);
         <?php
         while ($row = $result->fetch_assoc()) {
             echo "<tr>
-                <td>{$row['id']}</td>
                 <td>{$row['nome']}</td>
                 <td>{$row['email']}</td>
+                <td>{$row['telefone']}</td>
                 <td>{$row['cidade']}</td>
                 <td>{$row['estado']}</td>
                 <td>{$row['pais']}</td>
                 <td>
-                    <a href='editar.php?id={$row['id']}'>Editar</a>
-                    <a href='excluir.php?id={$row['id']}'>Excluir</a>
+                    <a href='user/editar.php?id={$row['id']}'>Editar</a>
+                    <a href='#' onclick='abrirModal({$row['id']})'>Excluir</a>
                 </td>
             </tr>";
         }
         ?>
     </table>
 
-    <br>
-    <a href="adicionar.php">Adicionar Novo Usuário</a>
+    <div class="btn">
+        <button onclick="window.location.href='user/adicionar.php'">Adicionar Usuário</button>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="m-content">
+            <h2>Excluir Usuário</h2>
+            <p>Tem certeza que deseja excluir este usuário?</p>
+            <button style="margin-bottom: 10px;" id="submit">Confirmar</button>
+            <button id="cancel">Cancelar</button>
+        </div>
+    </div>
+
+    <!-- simulação -->
+    <div id="loading" class="loading"></div>
+
+    <script src="js/excluir.js"></script>
 
 </body>
 
